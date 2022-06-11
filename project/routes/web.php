@@ -293,9 +293,10 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
             Route::get('/', [SMSController::class, 'index'])->name('admin.notify.sms.index');
             Route::get('/create', [SMSController::class, 'create'])->name('admin.notify.sms.create');
             Route::post('/store', [SMSController::class, 'store'])->name('admin.notify.sms.store');
-            Route::get('/edit/{id}', [SMSController::class, 'edit'])->name('admin.notify.sms.edit');
-            Route::put('/update/{id}', [SMSController::class, 'update'])->name('admin.notify.sms.update');
-            Route::delete('/destroy/{id}', [SMSController::class, 'destroy'])->name('admin.notify.sms.destroy');
+            Route::get('/edit/{SMS}', [SMSController::class, 'edit'])->name('admin.notify.sms.edit');
+            Route::put('/update/{SMS}', [SMSController::class, 'update'])->name('admin.notify.sms.update');
+            Route::delete('/destroy/{SMS}', [SMSController::class, 'destroy'])->name('admin.notify.sms.destroy');
+            Route::get('/status/{SMS}',[SMSController::class,'status'])->name('admin.notify.sms.status');
         });
     });
 

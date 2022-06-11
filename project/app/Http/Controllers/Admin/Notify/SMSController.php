@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin\notify;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Notify\SMSRequest;
+use App\Models\Notify\SMS;
 use Illuminate\Http\Request;
 
 class SMSController extends Controller
@@ -14,7 +16,9 @@ class SMSController extends Controller
      */
     public function index()
     {
-        return view('admin.notify.sms.index');
+        // dd(jalaliDate('today'));
+        $sms = SMS::orderBy('created_at', 'desc')->simplePaginate(15);
+        return view('admin.notify.sms.index', compact('sms'));
     }
 
     /**
@@ -24,8 +28,8 @@ class SMSController extends Controller
      */
     public function create()
     {
+        
         return view('admin.notify.sms.create');
-
     }
 
     /**
@@ -34,9 +38,15 @@ class SMSController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SMSRequest $request)
     {
-        //
+        $inputs=$request->all();
+
+        $realTimeStampStart=substr($request->published_at,0,10);
+        $inputs['published_at']=date("Y-m-d H:i:s",(int)$realTimeStampStart);
+
+        $sms=SMS::create($inputs);
+        return redirect()->route('admin.notify.sms.index')->with('swal-success','پیامک شما با موفقیت ثبت شد');
     }
 
     /**
@@ -79,8 +89,25 @@ class SMSController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SMS $SMS)
     {
-        //
+        $result = $SMS->delete();
+        return redirect()->route('admin.notify.sms.index')->with('swal-success', 'حدف با موفقیت انجام شد');
+    }
+
+    public function status(SMS $SMS)
+    {
+        $SMS->status = $SMS->status == 0 ? 1 : 0;
+        $result = $SMS->save();
+
+        if ($result) {
+            if ($SMS->status == 0) {
+                return response()->json(['status' => true, 'checked' => false]);
+            } else {
+                return response()->json(['status' => true, 'checked' => true]);
+            }
+        } else {
+            return response()->json(['status' => false]);
+        }
     }
 }

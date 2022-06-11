@@ -51,7 +51,7 @@
                                     <th>{{ $key += 1 }}</th>
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->PostCategory->name }}</td>
-                                    <td>{{ $post->published_at }}</td>
+                                    <td>{{ jalaliDate($post->published_at) }}</td>
                                     <td>
                                         <label>
                                             <input id="{{ $post->id }}" onchange="changeStatus({{ $post->id }})" data-url="{{ route('admin.content.post.status', $post->id) }}" type="checkbox" @if ($post->status === 1)
