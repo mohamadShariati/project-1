@@ -48,10 +48,11 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($postCategories as $key => $postCategory)
 
                         <tr>
-                            <th>{{$key+=1}}</th>
+                            <th>{{ $key += 1 }}</th>
                             <td>{{ $postCategory->name }}</td>
                             <td>{{ $postCategory->description }}</td>
                             <td>{{ $postCategory->slug }}</td>

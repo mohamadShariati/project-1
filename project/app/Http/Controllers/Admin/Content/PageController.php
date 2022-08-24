@@ -38,11 +38,9 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        $inputs=$request->all();
-
-        $page=Page::create($inputs);
-        return redirect()->route('admin.content.page.index')->with('swal-success','پیج جدید با موفقیت ساخته شد');
-
+        $inputs = $request->all();
+        $page = Page::create($inputs);
+        return redirect()->route('admin.content.page.index')->with('swal-success', 'صفحه  جدید شما با موفقیت ثبت شد');
     }
 
     /**
@@ -64,7 +62,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        return view('admin.content.page.edit',compact('page'));
+        return view('admin.content.page.edit', compact('page'));
     }
 
     /**
@@ -74,12 +72,12 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PageRequest $request,Page $page)
+    public function update(PageRequest $request, Page $page)
     {
-        $inputs=$request->all();
-        
+        $inputs = $request->all();
+        // $inputs['slug'] = null;
         $page->update($inputs);
-        return redirect()->route('admin.content.page.index')->with('swal-success','پیج با موفقیت ویرایش شد');
+        return redirect()->route('admin.content.page.index')->with('swal-success', 'صفحه  شما با موفقیت ویرایش شد');
     }
 
     /**
@@ -91,22 +89,27 @@ class PageController extends Controller
     public function destroy(Page $page)
     {
         $result = $page->delete();
-        return redirect()->route('admin.content.page.index')->with('swal-success', 'صفحه با موفقیت حذف شد');
+        return redirect()->route('admin.content.page.index')->with('swal-success', 'صفحه  شما با موفقیت حذف شد');
     }
 
-    public function status(Page $page)
-    {
+
+    public function status(Page $page){
+
         $page->status = $page->status == 0 ? 1 : 0;
         $result = $page->save();
-
-        if ($result) {
-            if ($page->status == 0) {
-                return response()->json(['status' => true, 'checked' => false]);
-            } else {
-                return response()->json(['status' => true, 'checked' => true]);
-            }
-        } else {
+        if($result){
+                if($page->status == 0){
+                    return response()->json(['status' => true, 'checked' => false]);
+                }
+                else{
+                    return response()->json(['status' => true, 'checked' => true]);
+                }
+        }
+        else{
             return response()->json(['status' => false]);
         }
+
     }
+
+
 }

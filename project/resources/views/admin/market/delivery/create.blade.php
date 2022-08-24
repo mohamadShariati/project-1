@@ -30,26 +30,62 @@
             </section>
 
             <section>
-                <form action="" method="">
+                <form action="{{ route('admin.market.delivery.store') }}" method="post">
+                    @csrf
                     <section class="row">
 
                         <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">نام روش ارسال</label>
-                                <input type="text" class="form-control form-control-sm">
+                                <input type="text" name="name" value="{{ old('name') }}" class="form-control form-control-sm">
                             </div>
+                            @error('name')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
                         </section>
                         <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">هزینه روش ارسال</label>
-                                <input type="text" class="form-control form-control-sm">
+                                <input type="text" name="amount"  value="{{ old('amount') }}" class="form-control form-control-sm">
                             </div>
+                            @error('amount')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
                         </section>
                         <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">زمان ارسال</label>
-                                <input type="text" class="form-control form-control-sm">
+                                <input type="text" name="delivery_time" value="{{ old('delivery_time') }}" class="form-control form-control-sm">
                             </div>
+                            @error('delivery_time')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
+                        </section>
+
+                        <section class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="">واحد زمان ارسال</label>
+                                <input type="text" name="delivery_time_unit" value="{{ old('delivery_time_unit') }}" class="form-control form-control-sm">
+                            </div>
+                            @error('delivery_time_unit')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
                         </section>
 
                         <section class="col-12">

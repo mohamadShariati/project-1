@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Admin\Content;
 
 use App\Models\Content\Faq;
-use App\Models\Content\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Content\Faq as ContentFaq;
 use App\Http\Requests\Admin\Content\FaqRequest;
 
 class FAQController extends Controller
@@ -18,8 +16,7 @@ class FAQController extends Controller
      */
     public function index()
     {
-        
-        $faqs = Faq::orderBy('created_at', 'desc')->simplePaginate(15);
+        $faqs = Faq::orderBy('created_at')->simplePaginate(15);
         return view('admin.content.faq.index', compact('faqs'));
     }
 
@@ -41,12 +38,9 @@ class FAQController extends Controller
      */
     public function store(FaqRequest $request)
     {
-        // dd($request);
-
         $inputs = $request->all();
-        // dd($inputs);
         $faq = Faq::create($inputs);
-        return redirect()->route('admin.content.faq.index')->with('swal-success', 'پرسش متداول با موفقیت ساخته شد');
+        return redirect()->route('admin.content.faq.index')->with('swal-success', 'پرسش  جدید شما با موفقیت ثبت شد');
     }
 
     /**
@@ -68,8 +62,7 @@ class FAQController extends Controller
      */
     public function edit(Faq $faq)
     {
-
-        return view('admin.content.faq.edit',compact('faq'));
+        return view('admin.content.faq.edit', compact('faq'));
     }
 
     /**
@@ -79,12 +72,11 @@ class FAQController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(FaqRequest $request,Faq $faq)
+    public function update(FaqRequest $request, Faq $faq)
     {
-        $inputs=$request->all();
-        
-        $faq ->update($inputs);
-        return redirect()->route('admin.content.faq.index')->with('swal-success','پرسش با موفقیت ویرایش شد');
+        $inputs = $request->all();
+        $faq->update($inputs);
+        return redirect()->route('admin.content.faq.index')->with('swal-success', 'پرسش شما با موفقیت ویرایش شد');;
     }
 
     /**
@@ -96,22 +88,27 @@ class FAQController extends Controller
     public function destroy(Faq $faq)
     {
         $result = $faq->delete();
-        return redirect()->route('admin.content.faq.index');
+        return redirect()->route('admin.content.faq.index')->with('swal-success', 'پرسش  شما با موفقیت حذف شد');
     }
 
-    public function status(Faq $faq)
-    {
+
+    public function status(Faq $faq){
+
         $faq->status = $faq->status == 0 ? 1 : 0;
         $result = $faq->save();
-
-        if ($result) {
-            if($faq->status==0){
-                return response()->json(['status'=>true,'checked'=>false]);
-            }else{
-                return response()->json(['status'=>true,'checked'=>true]);
-            }
-        } else {
+        if($result){
+                if($faq->status == 0){
+                    return response()->json(['status' => true, 'checked' => false]);
+                }
+                else{
+                    return response()->json(['status' => true, 'checked' => true]);
+                }
+        }
+        else{
             return response()->json(['status' => false]);
         }
+
     }
+
+
 }

@@ -3,14 +3,13 @@
 namespace App\Models\Content;
 
 use Cviebrock\EloquentSluggable\Sluggable;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use HasFactory,SoftDeletes, Sluggable;
+    use HasFactory, SoftDeletes, Sluggable;
 
     public function sluggable(): array
     {
@@ -22,22 +21,17 @@ class Post extends Model
     }
 
     protected $casts = ['image' => 'array'];
+    protected $fillable = ['title', 'summary', 'slug', 'image', 'status', 'tags', 'body', 'published_at', 'author_id', 'category_id', 'commentable'];
 
-
-    protected $fillable = ['title','slug','summary','body','image','status','commentable','tags','published_at','author_id','category_id'];
-
-    public function PostCategory()
+    public function postCategory()
     {
-      
-      return $this->belongsTo(PostCategory::class,'category_id');
+        return $this->belongsTo(PostCategory::class, 'category_id');
     }
 
-    public function User()
+    public function comments()
     {
-      return $this->belongsTo(User::class,'author_id');
+        return $this->morphMany('App\Models\Content\Comment', 'commentable');
     }
 
-    public function comments(){
-      return $this->morphMany('App\Modele\Content\Comment','commentable');
-    }
+
 }

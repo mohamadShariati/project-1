@@ -19,8 +19,7 @@ class PostCategory extends Model
                 'source' => 'name'
             ]
         ];
-    } 
-    
+    }
 
     protected $casts = ['image' => 'array'];
 

@@ -96,6 +96,7 @@ class ImageService extends ImageToolsService
             return false;
         }
 
+
         $files = glob($directory . DIRECTORY_SEPARATOR . '*', GLOB_MARK);
         foreach($files as $file)
         {

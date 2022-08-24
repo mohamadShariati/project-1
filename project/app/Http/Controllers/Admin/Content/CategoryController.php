@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Content;
 
+use App\Http\Controllers\admin\content\PostController;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -116,8 +117,9 @@ class CategoryController extends Controller
                 $inputs['image'] = $image;
             }
         }
+        // $inputs['slug'] = null;
         $postCategory->update($inputs);
-        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');;
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'دسته بندی شما با موفقیت ویرایش شد');
     }
 
     /**

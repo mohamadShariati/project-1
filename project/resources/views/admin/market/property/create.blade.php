@@ -30,25 +30,59 @@
             </section>
 
             <section>
-                <form action="" method="">
+                <form action="{{ route('admin.market.property.store') }}" method="POST">
+                    @csrf
                     <section class="row">
 
                         <section class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="">نام فرم</label>
-                                <input type="text" class="form-control form-control-sm">
+                                <input type="text" name="name" value="{{ old('name') }}" class="form-control form-control-sm">
                             </div>
+                            @error('name')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
                         </section>
 
-                        <section class="col-12 col-md-6">
+                      <section class="col-12 col-md-6">
                             <div class="form-group">
-                                <label for="">فرم والد</label>
-                                <select name="" id="" class="form-control form-control-sm">
-                                    <option value="">فرم را انتخاب کنید</option>
-                                    <option value="">وسایل الکترونیکی</option>
+                                <label for="">واحد اندازه گیری</label>
+                                <input type="text" name="unit" value="{{ old('unit') }}" class="form-control form-control-sm">
+                            </div>
+                            @error('unit')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
+                        </section>
+
+                        <section class="col-12">
+                            <div class="form-group">
+                                <label for="">انتخاب دسته</label>
+                                <select name="category_id" id="" class="form-control form-control-sm">
+                                    <option value="">دسته را انتخاب کنید</option>
+                                    @foreach ($productCategories as $productCategory)
+                                    <option value="{{ $productCategory->id }}" @if(old('category_id') == $productCategory->id) selected @endif>{{ $productCategory->name }}</option>
+                                    @endforeach
+
                                 </select>
                             </div>
+                            @error('category_id')
+                            <span class="alert_required bg-danger text-white p-1 rounded" role="alert">
+                                <strong>
+                                    {{ $message }}
+                                </strong>
+                            </span>
+                        @enderror
                         </section>
+
+
                         <section class="col-12">
                             <button class="btn btn-primary btn-sm">ثبت</button>
                         </section>

@@ -99,6 +99,7 @@
                                         </strong>
                                     </span>
                                 @enderror
+                            </section>
 
                                 <section class="row">
                                     @php

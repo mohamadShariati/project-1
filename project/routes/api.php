@@ -1,7 +1,11 @@
 <?php
 
+use App\Models\Market\Brand;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Market\BrandController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +18,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+Route::get('/userrrrrr', function (Request $request) {
+    $b=Brand::all();
+        return response()->json([
+            'brand' => $b
+        ],200);
 });
